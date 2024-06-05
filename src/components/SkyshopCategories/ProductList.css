@@ -1,0 +1,18 @@
+/* styles.css */
+.scrollbar-thin {
+  scrollbar-width: thin; /* For Firefox */
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 12px; /* Width of the vertical scrollbar */
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #CCD2D8; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Border radius of the scrollbar thumb */
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* Color of the scrollbar track */
+}

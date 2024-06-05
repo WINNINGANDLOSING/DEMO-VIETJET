@@ -1,0 +1,13 @@
+.sample {
+  width: 400px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid black;
+}
+
+.sample img {
+  position: absolute;
+  top: 1px;
+  
+}

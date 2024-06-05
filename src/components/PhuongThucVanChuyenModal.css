@@ -1,0 +1,34 @@
+/* Custom checkbox styling */
+.custom-checkbox-container input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.custom-checkbox-container .checkmark {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: gray; /* Background color when unchecked */
+  border: 2px solid white;
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+.custom-checkbox-container input[type="checkbox"]:checked + .checkmark {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.custom-checkbox-container input[type="checkbox"]:checked + .checkmark::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; /* Adjust the size as needed */
+  height: 60%; /* Adjust the size as needed */
+  background-color: white; /* Color of the check dot */
+  border-radius: 50%;
+}
