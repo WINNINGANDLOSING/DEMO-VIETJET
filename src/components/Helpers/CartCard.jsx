@@ -13,6 +13,8 @@ const CartCard = ({
   setCartTracker,
 }) => {
   const { id, name, salePrice, originalPrice, salePercent, dungTich } = content;
+  
+
   const [itemCount, setItemCount] = useState(1);
   const [isRemoved, SetIsRemoved] = useState(false);
 
@@ -268,7 +270,7 @@ const CartCard = ({
               </div>
               <div className="absolute right-2 top-1/2">
                 <span className="line-through text-gray-400">
-                  {originalPrice} đ
+                  {originalPrice.toLocaleString()} đ
                 </span>
                 <span className="text-red-400 ml-2">{salePercent} off </span>
                 <br />
@@ -279,7 +281,7 @@ const CartCard = ({
                     fontWeight: "bold",
                   }}
                 >
-                  {salePrice} VND
+                  {salePrice.toLocaleString()} VND
                 </span>
               </div>
             </div>

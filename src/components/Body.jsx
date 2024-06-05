@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Card from "./Helpers/Card";
 import { globalContext } from "../context";
 import PhuongThucVanChuyenModal from "./PhuongThucVanChuyenModal";
@@ -8,7 +8,6 @@ import videoSample3 from "../images/videoSample3.png";
 import videoSamplePlayButton from "../images/videoSamplePlayButton.png";
 import bodyPrebookMealVienVang from "../images/bodyPrebookMealVienVang.png";
 import SuggestionsForYou from "../images/SuggestionsForYou.png";
-
 
 import categoriesLogo from "../images/categoriesLogo.png";
 import ad1 from "../images/ad1.png";
@@ -36,6 +35,7 @@ import SanPham100000 from "../images/100000SanPham.png";
 import SieuToc247 from "../images/SieuToc247.png";
 import HangNgan from "../images/HangNgan.png";
 import CungVietjetBayVaoTuongLai from "../images/CungVietjetBayVaoTuongLai.png";
+import { Container } from "postcss";
 
 /* in here, i use componentizaiton for every item */
 const Body = () => {
@@ -53,94 +53,84 @@ const Body = () => {
     // SuperAppSuperData,
     // BeautyData,
     // suggestionsData,
-    DataBase
+    DataBase,
   } = globalContext();
   /* Prebook Meal */
   console.log(DataBase);
   console.log(typeof DataBase);
 
-  let PrebookMealData = []
-  PrebookMealData = Object.values(DataBase).filter(data => ((data.id).toString().includes("PM")))  
+  let PrebookMealData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("PM")
+  );
   // PrebookMealData = PrebookMealData.concat(
   //   PrebookMealData.map((item) => ({ ...item }))
   // );
 
-  console.log(PrebookMealData);
-  PrebookMealData.map(data => {
-    console.log(data.origin)
-  })
-  // const {
-  //   PrebookMealSample1,
-  //   PrebookMealSample2,
-  //   PrebookMealSample3,
-  //   PrebookMealSample4,
-  //   PrebookMealSample5,
-  // } = PrebookMealData;
+  //PrebookMealData = PrebookMealData.concat(PrebookMealData.map(item => ({...item})))
 
   /* Exclusive Merch */
-  const {
-    ExclusiveMerchSample1,
-    ExclusiveMerchSample2,
-    ExclusiveMerchSample3,
-    ExclusiveMerchSample4,
-    ExclusiveMerchSample5,
-  } = ExclusiveMerchData;
+  let ExclusiveMerchData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("ExMerch")
+  );
+
+  ExclusiveMerchData = ExclusiveMerchData.concat(
+    ExclusiveMerchData,
+    ExclusiveMerchData
+  );
+
+  const ExclusiveMerchRef = useRef(null);
 
   /* Jet Cafe */
-  const {
-    JetCafeSample1,
-    JetCafeSample2,
-    JetCafeSample3,
-    JetCafeSample4,
-    JetCafeSample5,
-  } = JetCafeData;
+  let JetCafeData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("Jet")
+  );
+  JetCafeData = JetCafeData.concat(JetCafeData, JetCafeData);
+  const JetCafeRef = useRef(null);
 
   /* F&B */
-  const {
-    FAndBSample1,
-    FAndBSample2,
-    FAndBSample3,
-    FAndBSample4,
-    FAndBSample5,
-  } = FAndBData;
+  let FAndBData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("FB")
+  );
+  FAndBData = FAndBData.concat(FAndBData, FAndBData);
+  const FBRef = useRef(null);
 
   /* Super App Super Sale */
-  const {
-    SuperAppSuperSaleSample1,
-    SuperAppSuperSaleSample2,
-    SuperAppSuperSaleSample3,
-    SuperAppSuperSaleSample4,
-    SuperAppSuperSaleSample5,
-  } = SuperAppSuperData;
+
+  let SuperAppSuperData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("SASL")
+  );
+  SuperAppSuperData = SuperAppSuperData.concat(
+    SuperAppSuperData,
+    SuperAppSuperData
+  );
+  const SASLRef = useRef(null);
 
   /* Biggest Beauty*/
 
-  const {
-    BeautySample1,
-    BeautySample2,
-    BeautySample3,
-    BeautySample4,
-    BeautySample5,
-  } = BeautyData;
+  let BeautyData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("BB")
+  );
+  BeautyData = BeautyData.concat(BeautyData, BeautyData);
+  const BBRef = useRef(null);
 
-  /* Suggestion Data */
-  const {
-    suggestionsSample1,
-    suggestionsSample2,
-    suggestionsSample3,
-    suggestionsSample4,
-    suggestionsSample5,
-    suggestionsSample6,
-    suggestionsSample7,
-    suggestionsSample8,
-    suggestionsSample9,
-    suggestionsSample10,
-    suggestionsSample11,
-    suggestionsSample12,
-    suggestionsSample13,
-    suggestionsSample14,
-    suggestionsSample15,
-  } = suggestionsData;
+  let suggestionsData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("SG")
+  );
+
+  const handleScrollRight = (ref) => {
+    ref.current.scrollBy({
+      left: ref.current.offsetWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const handleScrollLeft = (ref) => {
+    ref.current.scrollBy({
+      left: -ref.current.offsetWidth,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="h-[100%] p-0 m-0">
       {/* Modal implemeted here*/}
@@ -254,14 +244,8 @@ const Body = () => {
           </div>
 
           <div className="flex ml-[-1rem] space-x-2 mt-5">
-            <Card sample={PrebookMealSample1} />
-            <Card sample={PrebookMealSample2} />
-            <Card sample={PrebookMealSample3} />
-            <Card sample={PrebookMealSample4} />
-            <Card sample={PrebookMealSample5} />
-
-            {PrebookMealData.map(data => (
-              <Card data = {data} />
+            {PrebookMealData.map((data) => (
+              <Card data={data} />
             ))}
           </div>
           <img
@@ -279,17 +263,28 @@ const Body = () => {
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
           </div>
 
-          <div className="flex ml-[-1rem] space-x-2 mt-5">
-            <Card sample={ExclusiveMerchSample1} />
-            <Card sample={ExclusiveMerchSample2} />
-            <Card sample={ExclusiveMerchSample3} />
-            <Card sample={ExclusiveMerchSample4} />
-            <Card sample={ExclusiveMerchSample5} />
+          <div
+            className="flex flex-row space-x-2 mt-5 overflow-x-hidden"
+            ref={ExclusiveMerchRef}
+          >
+            {ExclusiveMerchData.map((data, index) => (
+              <Card key={index} data={data} />
+            ))}
           </div>
 
           <img
             src={videoSamplePlayButton}
-            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-1rem]"
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem] cursor-pointer"
+            onClick={() => {
+              handleScrollRight(ExclusiveMerchRef);
+            }}
+          />
+          <img
+            src={videoSamplePlayButton}
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 left-[-2rem] cursor-pointer rotate-180"
+            onClick={() => {
+              handleScrollLeft(ExclusiveMerchRef);
+            }}
           />
         </div>
 
@@ -327,17 +322,28 @@ const Body = () => {
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
           </div>
 
-          <div className="flex ml-[-1rem] space-x-2 mt-5">
-            <Card sample={JetCafeSample1} />
-            <Card sample={JetCafeSample2} />
-            <Card sample={JetCafeSample3} />
-            <Card sample={JetCafeSample4} />
-            <Card sample={JetCafeSample5} />
+          <div
+            className="flex flex-row space-x-2 mt-5 overflow-x-hidden"
+            ref={JetCafeRef}
+          >
+            {JetCafeData.map((data) => (
+              <Card data={data} />
+            ))}
           </div>
 
           <img
             src={videoSamplePlayButton}
-            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem]"
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem] cursor-pointer"
+            onClick={() => {
+              handleScrollRight(JetCafeRef);
+            }}
+          />
+          <img
+            src={videoSamplePlayButton}
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 left-[-2rem] cursor-pointer rotate-180"
+            onClick={() => {
+              handleScrollLeft(JetCafeRef);
+            }}
           />
         </div>
 
@@ -350,16 +356,27 @@ const Body = () => {
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
           </div>
 
-          <div className="flex ml-[-1rem] space-x-2 mt-5">
-            <Card sample={FAndBSample1} />
-            <Card sample={FAndBSample2} />
-            <Card sample={FAndBSample3} />
-            <Card sample={FAndBSample4} />
-            <Card sample={FAndBSample5} />
+          <div
+            className="flex ml-[-1rem] space-x-2 mt-5 overflow-x-hidden"
+            ref={FBRef}
+          >
+            {FAndBData.map((data) => (
+              <Card data={data} />
+            ))}
           </div>
           <img
             src={videoSamplePlayButton}
-            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem]"
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem] cursor-pointer"
+            onClick={() => {
+              handleScrollRight(FBRef);
+            }}
+          />
+          <img
+            src={videoSamplePlayButton}
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 left-[-2rem] cursor-pointer rotate-180"
+            onClick={() => {
+              handleScrollLeft(FBRef);
+            }}
           />
         </div>
 
@@ -372,17 +389,28 @@ const Body = () => {
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
           </div>
 
-          <div className="flex ml-[-1rem] space-x-2 mt-5">
-            <Card sample={SuperAppSuperSaleSample1} />
-            <Card sample={SuperAppSuperSaleSample2} />
-            <Card sample={SuperAppSuperSaleSample3} />
-            <Card sample={SuperAppSuperSaleSample4} />
-            <Card sample={SuperAppSuperSaleSample5} />
+          <div
+            className="flex ml-[-1rem] space-x-2 mt-5 overflow-x-hidden"
+            ref={SASLRef}
+          >
+            {SuperAppSuperData.map((data) => (
+              <Card data={data} />
+            ))}
           </div>
 
           <img
             src={videoSamplePlayButton}
-            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem]"
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem] cursor-pointer"
+            onClick={() => {
+              handleScrollRight(SASLRef);
+            }}
+          />
+          <img
+            src={videoSamplePlayButton}
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 left-[-2rem] cursor-pointer rotate-180"
+            onClick={() => {
+              handleScrollLeft(SASLRef);
+            }}
           />
         </div>
 
@@ -395,17 +423,28 @@ const Body = () => {
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
           </div>
 
-          <div className="flex ml-[-1rem] space-x-2 mt-5">
-            <Card sample={BeautySample1} />
-            <Card sample={BeautySample2} />
-            <Card sample={BeautySample3} />
-            <Card sample={BeautySample4} />
-            <Card sample={BeautySample5} />
+          <div
+            className="flex ml-[-1rem] space-x-2 mt-5 overflow-x-hidden"
+            ref={BBRef}
+          >
+            {BeautyData.map((data) => (
+              <Card data={data} />
+            ))}
           </div>
 
           <img
             src={videoSamplePlayButton}
-            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem]"
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem] cursor-pointer"
+            onClick={() => {
+              handleScrollRight(BBRef);
+            }}
+          />
+          <img
+            src={videoSamplePlayButton}
+            className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 left-[-2rem] cursor-pointer rotate-180"
+            onClick={() => {
+              handleScrollLeft(BBRef);
+            }}
           />
         </div>
 
@@ -458,42 +497,15 @@ const Body = () => {
         {/* Suggestions For You */}
         <img src={SuggestionsForYou} />
 
-        <div className="flex flex-col bg-white space-y-5 px-11">
-          <div className="flex ml-[-1rem] space-x-2">
-            <Card sample={suggestionsSample1} />
-            <Card sample={suggestionsSample2} />
-
-            <Card sample={suggestionsSample3} />
-
-            <Card sample={suggestionsSample4} />
-
-            <Card sample={suggestionsSample5} />
-          </div>
-
-          <div className="flex ml-[-1rem] space-x-2">
-            <Card sample={suggestionsSample6} />
-            <Card sample={suggestionsSample7} />
-
-            <Card sample={suggestionsSample8} />
-
-            <Card sample={suggestionsSample9} />
-            <Card sample={suggestionsSample10} />
-          </div>
-
-          <div className="flex ml-[-1rem] space-x-2">
-            <Card sample={suggestionsSample11} />
-            <Card sample={suggestionsSample12} />
-
-            <Card sample={suggestionsSample13} />
-
-            <Card sample={suggestionsSample14} />
-            <Card sample={suggestionsSample15} />
-          </div>
-
-          <div className="self-center rounded-[5px] text-center bg-white border-red-500 border-2 w-24 h-10 flex items-center justify-center">
-            <span className="text-[13px] font-bold text-red-500">Xem Thêm</span>
-          </div>
+        <div className="grid grid-cols-5 bg-white gap-2  px-11">
+          {suggestionsData.map((data) => (
+            <Card data={data} />
+          ))}
         </div>
+        <div className="self-center rounded-[5px] text-center bg-white border-red-500 border-2 w-24 h-10 flex items-center justify-center">
+          <span className="text-[13px] font-bold text-red-500">Xem Thêm</span>
+        </div>
+
         {/* Bottom Decorations */}
         <div className="flex flex-col px-11 space-y-5">
           <div className="flex flex-row space-x-5 ">

@@ -5,7 +5,7 @@ import hairCare from "../../images/hairCare.png";
 import bodyCare from "../../images/bodyCare.png";
 import Card from "../Helpers/Card";
 import FooterProductList from "./FooterProductList";
-import { globalContext } from "../../context copy";
+import { globalContext } from "../../ContextCopy";
 import Star from "../../images/1star.png";
 import MultiThumbSlider from "./MultiThumbSlider";
 

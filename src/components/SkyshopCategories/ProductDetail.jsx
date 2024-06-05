@@ -8,70 +8,19 @@ import bestSale from "../../images/bestSale.png";
 import chiaSe from "../../images/chiaSe.png";
 import favorite from "../../images/favorite.png";
 import { NavLink, useLocation } from "react-router-dom";
-import { globalContext } from "../../context copy";
+import { globalContext } from "../../ContextCopy";
 import Card from "../Helpers/Card";
 const ProductDetail = () => {
   const [selectedPreview, SetSelectedPreview] = useState();
-  const previews = [
-    HyaluronicAcidHairTreatment,
-    HyaluronicAcidHairTreatment,
-    HyaluronicAcidHairTreatment,
-  ];
+  
 
-  const { PrebookMealData } = globalContext();
-  const {
-    PrebookMealSample1,
-    PrebookMealSample2,
-    PrebookMealSample3,
-    PrebookMealSample4,
-    PrebookMealSample5,
-  } = PrebookMealData;
-
-  const otherProductsData = [
-    PrebookMealSample1,
-    PrebookMealSample2,
-    PrebookMealSample3,
-    PrebookMealSample4,
-    PrebookMealSample5,
-  ];
-
-  const youMightAlsoLikeData = [
-    PrebookMealSample1,
-    PrebookMealSample2,
-    PrebookMealSample3,
-    PrebookMealSample4,
-    PrebookMealSample5,
-    PrebookMealSample1,
-    PrebookMealSample2,
-    PrebookMealSample3,
-    PrebookMealSample4,
-    PrebookMealSample5,
-    PrebookMealSample1,
-    PrebookMealSample2,
-    PrebookMealSample3,
-    PrebookMealSample4,
-    PrebookMealSample5,
-  ];
+  
 
   const location = useLocation();
-  const sample = location.state.sample;
-  //console.log(sample);
+  const data = location.state.data;
+  //console.log(data);
 
-  const { content, image } = sample;
-
-  const {
-    brand,
-    id,
-    isBestSale,
-    isDutyFree,
-    name,
-    origin,
-    originalPrice,
-    reviewCount,
-    salePercent,
-    salePrice,
-    soldUnits,
-  } = content;
+  const previews = [data.image, data.image, data.image]
 
   const handleOnClickPreview = (index) => {
     SetSelectedPreview(index);
@@ -91,21 +40,21 @@ const ProductDetail = () => {
             style={{ width: "70%" }}
             className="flex items-center justify-center"
           >
-            <img src={image} className="w-80" />
+            <img src={data.image} className="w-80" />
           </div>
           {/* This should take 30% */}
           <div className="flex grow p-5  flex-col">
-            {isDutyFree && (
+            {data.isDutyFree && (
               <div className="flex flex-row items-center ">
                 <img src={dutyFreeLogo} className="w-5 h-5 mb-1" />
                 <span className="text-[11px] text-dutyFree"> Duty Free</span>
               </div>
             )}
-            <span className="text-[24px] mt-1 font-bold">{name}</span>
-            <span className="text-[12px] mt-3 text-brand">{origin}</span>
+            <span className="text-[24px] mt-1 font-bold">{data.name}</span>
+            <span className="text-[12px] mt-3 text-brand">{data.origin}</span>
             <div className="flex space-x-28 mt-3 items-center text-brand text-[11px] relative">
               <div className="flex justify-between space-x-1 items-center">
-                <span> ({reviewCount}) </span>
+                <span> ({data.reviewCount}) </span>
                 <div className="flex space-x-1 pb-[0.1rem] items-center">
                   <img
                     src={star}
@@ -142,7 +91,7 @@ const ProductDetail = () => {
                 <div className="">
                   |
                   <span>
-                    <span className="font-bold"> {soldUnits}</span> Đã bán
+                    <span className="font-bold"> {data.soldUnits}</span> Đã bán
                   </span>
                 </div>
               </div>
@@ -154,33 +103,25 @@ const ProductDetail = () => {
             </div>
             <div className="flex flex-row items-center mt-10 space-x-10">
               <span className="text-salePrice font-bold text-[30px]">
-                {salePrice.toLocaleString(undefined, {
-                  minimumFractionDigits: 3,
-                  maximumFractionDigits: 3,
-                })}
-                đ
+                {data.salePrice.toLocaleString(undefined, {})}đ
               </span>
               <span className="line-through text-[12px] text-brand">
-                {originalPrice.toLocaleString(undefined, {
-                  minimumFractionDigits: 3,
-                  maximumFractionDigits: 3,
-                })}
-                đ
+                {data.originalPrice.toLocaleString(undefined, {})}đ
               </span>
               <div
                 className="w-[4.5rem] h-[2rem] text-[13px] rounded-[5px] bg-pink-100 font-bold
                  text-salePercentDetail flex items-center justify-center"
               >
-                <span>{salePercent} off</span>
+                <span>{data.salePercent} off</span>
               </div>
             </div>
             <div className="mt-5 text-gray-400"> Số lượng </div>
             <div className="flex space-x-5 mt-10">
               <NavLink
                 className="flex items-center justify-center z-30 appearance-none self-center bg-custom-gradient w-[150px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg cursor-pointer"
-                to={`/CartStage1`}
+                to={`/ProductDetail/CartStage1`}
                 state={{
-                  sample: sample,
+                  data: data,
                   purchaseType: "muaNgay",
                 }}
               >
@@ -188,9 +129,9 @@ const ProductDetail = () => {
               </NavLink>
               <NavLink
                 className="flex items-center justify-center z-30 appearance-none self-center bg-gray-300 w-[250px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
-                to={`/CartStage1`}
+                to={`/ProductDetail/CartStage1`}
                 state={{
-                  sample: sample,
+                  data: data,
                   purchaseType: "themVaoGioHang",
                 }}
               >
@@ -209,7 +150,7 @@ const ProductDetail = () => {
               }`}
               onClick={() => handleOnClickPreview(index)}
             >
-              <img src={image} className="w-10 h-14" />
+              <img src={preview} className="w-10 h-14" />
             </div>
           ))}
         </div>
@@ -351,24 +292,24 @@ const ProductDetail = () => {
 
       {/* Other Products*/}
 
-      <div className="  space-y-5 p-8">
+      {/* <div className="  space-y-5 p-8">
         <span className="text-[25px] font-bold"> Other Products </span>
         <div className="grid grid-cols-5 gap-y-5 gap-x-3 ">
           {otherProductsData.map((cartItem) => {
             return <Card sample={cartItem} />;
           })}
         </div>
-      </div>
+      </div> */}
 
       {/* You May Also Like*/}
-      <div className=" p-8 space-y-5">
+      {/* <div className=" p-8 space-y-5">
         <span className="text-[25px] font-bold"> You might also like </span>
         <div className="grid grid-cols-5 gap-y-5 gap-x-3 ">
           {youMightAlsoLikeData.map((cartItem) => {
             return <Card sample={cartItem} />;
           })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

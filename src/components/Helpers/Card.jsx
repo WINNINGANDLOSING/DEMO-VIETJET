@@ -10,9 +10,9 @@ const Card = ({ data }) => {
   
   return (
     <NavLink
-      to={`/ProductList/ProductDetail`}
-      state={{ sample: sample }}
-      className="max-w-96 px-3 py-4  z-30 flex flex-col rounded-[8px] bg-white items-center relative"
+      to={`Body/ProductDetail`}
+      state={{ data: data }}
+      className="max-w-[230px] px-5 py-4  z-30 flex flex-shrink-0 flex-col rounded-[8px] bg-white items-center relative"
     >
       {/* Just don't put h- here, it will automatically increase height to fix*/}
       {data.isBestSale && (
@@ -35,10 +35,7 @@ const Card = ({ data }) => {
         <div className="flex flex-row mt-4 relative">
           <div className="flex flex-col">
             <span className="text-salePrice font-bold">
-              {(data.salePrice).toLocaleString(undefined, {
-                
-              })}
-              đ
+              {data.salePrice.toLocaleString(undefined, {})}đ
             </span>
             <span className="line-through text-[12px] text-brand">
               {data.originalPrice} đ

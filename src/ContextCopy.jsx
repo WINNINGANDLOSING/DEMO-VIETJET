@@ -977,7 +977,7 @@ const AppProvider = ({ children }) => {
   );
 };
 
-export const globalContext = () => {
+export const globalContext   = () => {
   return useContext(AppContext);
 };
 

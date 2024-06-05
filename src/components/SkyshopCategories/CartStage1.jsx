@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink, Navigate, useNavigate, useLocation } from "react-router-dom";
 import pickupLocation from "../../images/pickupLocation.png";
 
-import { globalContext } from "../../context copy";
+import { globalContext } from "../../ContextCopy";
 import CartCard from "../Helpers/CartCard";
 const CartStage1 = () => {
   {
@@ -11,32 +11,18 @@ const CartStage1 = () => {
 
   const location = useLocation();
 
-  const sample = location.state.sample;
+  const data = location.state.data;
   const purchaseType = location.state.purchaseType;
-  const { content, image } = sample;
-  const {
-    brand,
-    id,
-    isBestSale,
-    isDutyFree,
-    name,
-    origin,
-    originalPrice,
-    reviewCount,
-    salePercent,
-    salePrice,
-    soldUnits,
-  } = content;
 
   let cartItems1 = [];
   // Function to add new items to the local storage without overwriting it
   const handleAddNewItemToLocalStorage = () => {
-    if(purchaseType==="muaNgay"){
+    if (purchaseType === "muaNgay") {
       localStorage.clear();
     }
     // If localStorage contains any item, return the list of items, else if localStorage is empty, return []
     const oldItems = JSON.parse(localStorage.getItem("Items")) || [];
-    const newItem = sample;
+    const newItem = data;
     // If there is value in oldItems already match the newItem, this ensure only unique items get pushed in
     if (
       !Object.values(oldItems).some(
@@ -52,7 +38,8 @@ const CartStage1 = () => {
 
   handleAddNewItemToLocalStorage();
 
-  
+ Object.values(cartItems1).map((cartItem => (console.log(cartItem))))
+
   // const cartItems1 = [
   //   PrebookMealSample1,
   //   PrebookMealSample2,
@@ -61,14 +48,6 @@ const CartStage1 = () => {
   //   PrebookMealSample5,
   // ];
 
-  const cartItems2 = [
-    PrebookMealSample1,
-    PrebookMealSample2,
-    PrebookMealSample3,
-    PrebookMealSample4,
-    PrebookMealSample5,
-  ];
-
   const [isSelectedAll, setIsSelectedAll] = useState(false);
   const [cartTracker, setCartTracker] = useState([]); // List of all cart items
   const [confirmedCartTracker, setConfirmedCartTracker] = useState([]); // List of selected cart items
@@ -76,12 +55,7 @@ const CartStage1 = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [isBoughtFromDutyStore, setIsBoughtFromDutyStore] = useState(false);
   let navigate = useNavigate();
-  const [isConfirmed, SetIsConfirmed] = useState(false);
-  const handleOnClickMoveToStage2 = () => {
-    if (window.confirm("Are you sure you want to proceed to the checkout ?")) {
-      SetIsConfirmed(true);
-    }
-  };
+
   const handleOnCheckSelectAll = () => {
     if (!isSelectedAll) {
       setConfirmedCartTracker(cartTracker);
@@ -150,9 +124,7 @@ const CartStage1 = () => {
                   }}
                   onChange={handleOnCheckSelectAll}
                 />
-                <span className="font-bold text-[16px]">
-                  Tất cả ({cartItems2.length} sản phẩm)
-                </span>
+                <span className="font-bold text-[16px]">Tất cả (sản phẩm)</span>
               </div>
             </div>
 
@@ -177,21 +149,21 @@ const CartStage1 = () => {
                   View store info
                 </NavLink>
               </div>
-              {purchaseType === "themVaoGioHang" &&
-                cartItems1.map((cartItem) => (
-                  <CartCard
-                    salesCounter="ZoneDuty"
-                    image={cartItem.image}
-                    content={cartItem.content}
+                {Object.values(cartItems1).map((cartItem) => {
+                  const { image, ...content } = cartItem;
+                  return <CartCard
+                    salesCounter="Eastern@Cenang"
+                    image={image}
+                    content={content}
                     isSelectedAll={isSelectedAll}
                     confirmedCartTracker={confirmedCartTracker}
                     setConfirmedCartTracker={setConfirmedCartTracker}
                     cartTracker={cartTracker}
                     setCartTracker={setCartTracker}
-                  />
-                ))}
+                  />;
+                })}
 
-              {purchaseType === "muaNgay" && (
+              {/* {purchaseType === "muaNgay" && (
                 <CartCard
                   salesCounter="ZoneDuty"
                   image={image}
@@ -201,8 +173,8 @@ const CartStage1 = () => {
                   setConfirmedCartTracker={setConfirmedCartTracker}
                   cartTracker={cartTracker}
                   setCartTracker={setCartTracker}
-                /> 
-              )}
+                />
+              )} */}
             </div>
 
             <div className="rounded-[8px] flex flex-col">
@@ -226,7 +198,7 @@ const CartStage1 = () => {
                   View store info
                 </NavLink>
               </div>
-              {cartItems2.map((cartItem) => (
+              {/* {cartItems2.map((cartItem) => (
                 <CartCard
                   salesCounter="ZoneDuty"
                   image={cartItem.image}
@@ -237,7 +209,7 @@ const CartStage1 = () => {
                   cartTracker={cartTracker}
                   setCartTracker={setCartTracker}
                 />
-              ))}
+              ))} */}
             </div>
           </div>
 
@@ -262,16 +234,16 @@ const CartStage1 = () => {
                 </span>
               </div>
             </div>
-            <div className="mt-5 pl-5 flex items-center space-x-20">
+            <div className="mt-5 pl-5 flex items-center justify-between pr-5">
               <span className="font-bold"> Tổng </span>
               <span
                 style={{
                   color: "#EC2029",
-                  fontSize: "30px",
+                  fontSize: "25px",
                   fontWeight: "bold",
                 }}
               >
-                {totalPrice} VND
+                {totalPrice.toLocaleString()} VND
               </span>
             </div>
             {/* use navigate instead of navlink here because i want a confirm windows before users move to the stage 2 */}
@@ -291,7 +263,7 @@ const CartStage1 = () => {
                   ? window.confirm(
                       "Are you sure you want to proceed to the checkout section ? "
                     )
-                    ? navigate(`/CartStage1/CartStage2`, {
+                    ? navigate(`/ProductDetail/CartStage1/CartStage2`, {
                         state: {
                           totalPrice: JSON.parse(JSON.stringify(totalPrice)),
                           isBoughtFromDutyStore: isBoughtFromDutyStore,

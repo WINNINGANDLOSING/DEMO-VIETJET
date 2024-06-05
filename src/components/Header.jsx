@@ -64,7 +64,7 @@ const Header = () => {
       {/* The second row of the header */}
       {/* use px-20 because the red background must be from start to finish, content is 5rem from left*/}
       <div className="bg-red-600 text-white flex items-center px-28 py-5">
-        <img src={vietJetAirLogo} className="h-8" />
+        <img src={vietJetAirLogo} className="h-8 cursor-pointer appearance-none outline-none" onClick={() => {navigate(``)}} />
         {/* Delivery Method container*/}
         <div className="flex items-center ml-8 pl-3 bg-red-700 min-w-80 min-h-10 rounded-lg">
           <img src={deliveryMethodLogo1} className="w-5 h-5" />

@@ -275,6 +275,7 @@ const Data = [
     id: "Jet00005",
 
     brand: "vietjet",
+    image: MyY,
     name: "My Y",
     origin: "Vietjetair Jet Cafe",
     salePrice: 334000,
