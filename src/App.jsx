@@ -14,12 +14,13 @@ import CartStage2 from "./components/SkyshopCategories/CartStage2";
 
 const App = () => {
   return (
+  
     <div
       className="flex flex-col min-h-screen  overflow-x-hidden relative"
       style={{ background: `url(${bodyBackgroundImage})` }}
     >
       <Header />
-
+    hello
       {/* <Body />
 
       <Footer /> */}
