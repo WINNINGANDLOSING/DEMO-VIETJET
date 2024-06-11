@@ -2,13 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import yellowWarning from "../images/yellowWarning.png";
 import expandOptions from "../images/expandOptions.png";
 import calendar from "../images/calendar.png";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import yourAddress from "../images/yourAddress.png";
 import "react-datepicker/dist/react-datepicker.css";
+import { globalContext } from "../context";
 
 const PickupDetail = () => {
   let location = useLocation();
+  let navigate = useNavigate();
+  const { setDeliveryMethod } = globalContext();
   const pickupType = location.state.pickupType;
   const [selectedDate, setSelectedDate] = useState();
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
@@ -35,6 +38,12 @@ const PickupDetail = () => {
     if (dateInputRef.current && !dateInputRef.current.contains(event.target)) {
       setIsDatePickerVisible(false);
     }
+  };
+
+  const handleOnClickReturnHome = (path, method) => {
+    navigate(path);
+    setDeliveryMethod(method);
+    return handleOnClickReturnHome;
   };
 
   return (
@@ -133,13 +142,18 @@ const PickupDetail = () => {
 
           {/* salePercentFrom: "#F9A51A",
         salePercentVia: "#FBB612",
-        salePercentTo: "#FFDD00",*/}
-          <NavLink
-            className="flex items-center justify-center z-30 appearance-none self-center bg-custom-gradient w-[450px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
-            to={`/PhuongThucVanChuyen/PhuongThucVanChuyenDetail/PhuocThuocVanChuyenFinal`}
+        salePercentTo: "#FFDD00",
+                    <option value="inflightPickup">Inflight Pickup</option>
+            <option value="homeDelivery">Home Delivery</option>
+            <option value="airport">Airport / In-store pick-up</option>
+        
+        */}
+          <div
+            className="flex items-center justify-center z-30 cursor-pointer appearance-none self-center bg-custom-gradient w-[450px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
+            onClick={() => handleOnClickReturnHome(`/Home`, "homeDelivery")}
           >
             Bắt đầu mua sắm
-          </NavLink>
+          </div>
         </div>
       )}
 
@@ -203,12 +217,12 @@ const PickupDetail = () => {
               </button>
             </div>
 
-            <NavLink
-              className="flex items-center justify-center z-30 appearance-none self-center bg-custom-gradient w-[450px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
-              to={`/PhuongThucVanChuyen/PhuongThucVanChuyenDetail/PhuocThuocVanChuyenFinal`}
+            <div
+              className="flex items-center justify-center cursor-pointer z-30 appearance-none self-center bg-custom-gradient w-[450px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
+              onClick={() => handleOnClickReturnHome(`/Home`, "airport")}
             >
               Bắt đầu mua sắm
-            </NavLink>
+            </div>
 
             <NavLink className="text-[10px] flex self-center text-blue-500 appearance-none">
               Thay đổi phương thức vận chuyển
@@ -255,12 +269,12 @@ const PickupDetail = () => {
               />
             </div>
 
-            <NavLink
-              className="flex items-center justify-center z-30 appearance-none self-center bg-custom-gradient w-[450px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
-              to={`/PhuongThucVanChuyen/PhuongThucVanChuyenDetail/PhuocThuocVanChuyenFinal`}
+            <div
+              className="flex items-center justify-center cursor-pointer z-30 appearance-none self-center bg-custom-gradient w-[450px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
+              onClick={() => handleOnClickReturnHome(`/Home`, "inflightPickup")}
             >
               Bắt đầu mua sắm
-            </NavLink>
+            </div>
 
             <NavLink className="text-[10px] flex self-center text-blue-500 appearance-none">
               Thay đổi phương thức vận chuyển

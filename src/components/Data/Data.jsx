@@ -67,7 +67,7 @@ const Data = [
     brand: "Jovian",
     name: "Jovian x Vietjet Multifunction Bag Mint Green",
     image: BagMintGreen,
-    origin: "Vietjetair Mechandise",
+    origin: "Vietjetair Merchandise",
     salePrice: 25000,
     originalPrice: 534000,
     salePercent: "40%",
@@ -75,25 +75,26 @@ const Data = [
     reviewCount: 136,
     isDutyFree: true,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "PM00002",
     brand: "Jovian",
     image: EDP35ml,
     name: "Jovian x Vietjet Classic 101 EDP 35ml",
-    origin: "Vietjetair Mechandise",
+    origin: "Vietjetair Merchandise",
     salePrice: 2500000,
     originalPrice: 2534000,
     salePercent: "5%",
     soldUnits: "859",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "PM00003",
     brand: "Dewar's",
     image: MizunaraOakCask,
-
     name: "Dewar’s 8 Year Old Japanese Mizunara Oak Cask (750ML)...",
     origin: "Kanpai Malaysia",
     salePrice: 130000,
@@ -101,8 +102,8 @@ const Data = [
     salePercent: "19%",
     soldUnits: "3.3k",
     reviewCount: 20,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
-
   {
     id: "PM00004",
     brand: "DKNY",
@@ -116,12 +117,11 @@ const Data = [
     isDutyFree: true,
     isBestSale: true,
     image: BeDelicious,
+    category: "Lam Dep Suc Khoe",
   },
-
   {
     id: "PM00005",
     image: MarhenRickBlack,
-
     brand: "MARHEN.J",
     name: "MARHEN.J Ricky - Black",
     origin: "A.Global Concept",
@@ -131,281 +131,257 @@ const Data = [
     soldUnits: "45",
     reviewCount: 20,
     isDutyFree: true,
+    category: "Thoi Trang Nam Nu",
   },
-
-  /* End of Data for Prebook Meal */
-  /* End of Data for Prebook Meal */
-  /* End of Data for Prebook Meal */
-
-  /* Data for Exclusive Vietjet Air merchandise */
-  /* Data for Exclusive Vietjet Air merchandise */
-  /* Data for Exclusive Vietjet Air merchandise */
-
   {
     id: "ExMerch00001",
     image: VietjetA320,
     brand: "vietjet",
     name: "Vietjet A320 We Are All Champion Aircraft Model",
-    origin: "Vietjetair Mechandise",
-    salePrice: 334000,
+    origin: "Vietjetair Merchandise",
+    salePrice: 300000, // Randomized salePrice
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Do Dung Gia Dinh",
   },
   {
     id: "ExMerch00002",
     image: VietjetKidsFunBag,
-
     brand: "vietjet",
     name: "Vietjet Kids Fun Bag",
-    origin: "Vietjetair Mechandise",
-    salePrice: 334000,
+    origin: "Vietjetair Merchandise",
+    salePrice: 290000, // Randomized salePrice
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Do Dung Gia Dinh",
   },
   {
     id: "ExMerch00003",
     image: VietjetPullbackPlane,
-
     brand: "vietjet",
     name: "Vietjet Pullback Plane Topper Pen",
-    origin: "Vietjetair Mechandise",
-    salePrice: 334000,
+    origin: "Vietjetair Merchandise",
+    salePrice: 310000, // Randomized salePrice
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Do Dung Gia Dinh",
   },
   {
     id: "ExMerch00004",
     image: VietjetNeoKeychain,
-
     brand: "vietjet",
     name: "Vietjet NEO Keychain",
-    origin: "Vietjetair Mechandise",
-    salePrice: 334000,
+    origin: "Vietjetair Merchandise",
+    salePrice: 320000, // Randomized salePrice
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Do Dung Gia Dinh",
   },
   {
     id: "ExMerch00005",
     image: VietjetSignatureCottonshirt,
-
     brand: "vietjet",
     name: "Vietjet Signature Cotton T-Shirt",
-    origin: "Vietjetair Mechandise",
-    salePrice: 334000,
+    origin: "Vietjetair Merchandise",
+    salePrice: 280000, // Randomized salePrice
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
     isBestSale: true,
+    category: "Thoi Trang Nam Nu",
   },
-
-  /* End of Data for Exclusive Vietjet Air merchandise */
-  /* End of Data for Exclusive Vietjet Air merchandise */
-  /* End of Data for Exclusive Vietjet Air merchandise */
-
-  /* Data for Jet Cafe */
-  /* Data for Jet Cafe */
-  /* Data for Jet Cafe */
   {
     id: "Jet00001",
     image: BanhChungChaBong,
-
     brand: "vietjet",
     name: "Banh Chung Cha Bong",
     origin: "Vietjetair Jet Cafe",
-    salePrice: 334000,
+    salePrice: 50000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "Jet00002",
     image: ComGaKho,
-
     brand: "vietjet",
     name: "Com Ga Kho",
     origin: "Vietjetair Jet Cafe",
-    salePrice: 334000,
+    salePrice: 70000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "Jet00003",
     image: BunXaoTom,
-
     brand: "vietjet",
     name: "Bun Xao Tom",
     origin: "Vietjetair Jet Cafe",
-    salePrice: 334000,
+    salePrice: 100000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "Jet00004",
     image: BunXaoTom,
-
     brand: "vietjet",
     name: "Bun Xao Tom",
     origin: "Vietjetair Jet Cafe",
-    salePrice: 334000,
+    salePrice: 90000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "Jet00005",
-
     brand: "vietjet",
     image: MyY,
     name: "My Y",
     origin: "Vietjetair Jet Cafe",
-    salePrice: 334000,
+    salePrice: 120000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
-  /* End of Data for Jet Cafe */
-  /* End of Data for Jet Cafe */
-  /* End of Data for Jet Cafe */
-
-  /* Data for F&B */
-  /* Data for F&B */
-  /* Data for F&B */
   {
     id: "FB00001",
     image: Sprite,
-
     brand: "vietjet",
     name: "Sprite",
     origin: "F&B",
-    salePrice: 334000,
+    salePrice: 12000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "FB00002",
     image: KeoDeo,
-
     brand: "vietjet",
     name: "Keo Deo",
     origin: "F&B",
-    salePrice: 334000,
+    salePrice: 15000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "FB00003",
     image: DuaTuoi,
-
     brand: "vietjet",
     name: "Dua Tuoi",
     origin: "F&B",
-    salePrice: 334000,
+    salePrice: 30000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "FB00004",
     image: CocaColaZero,
-
     brand: "vietjet",
     name: "Coca Cola Zero",
     origin: "F&B",
-    salePrice: 334000,
+    salePrice: 15000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
-    isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "FB00005",
     image: CaPheSuaDa,
-
     brand: "vietjet",
     name: "Ca Phe Sua Da",
     origin: "F&B",
-    salePrice: 434000,
+    salePrice: 12000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    isDutyFree: true,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
-
   {
     id: "SASL00001",
     image: MakeUp1,
     brand: "vietjet",
-    name: "Sprite",
+    name: "Son Moi",
     origin: "FSuper Sale",
-    salePrice: 334000,
+    salePrice: 250000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
-
   {
     id: "SASL00002",
     image: MakeUp2,
-
     brand: "vietjet",
-    name: "Keo Deo",
+    name: "Phan Trang Diem",
     origin: "Super Sale",
-    salePrice: 334000,
+    salePrice: 260000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "SASL00003",
     image: StrawberryWine,
-
     brand: "vietjet",
     name: "Strawberry Wine",
     origin: "Super Sale",
-    salePrice: 334000,
+    salePrice: 80000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "SASL00004",
     image: UnknownDrink,
-
     brand: "vietjet",
     name: "Coca Cola Zero",
     origin: "Super Sale",
@@ -415,83 +391,67 @@ const Data = [
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
-
-  /* End of Data for F&B */
-  /* End of Data for F&B */
-  /* End of Data for F&B */
-
-  /* Data for Super App Super Sale */
-  /* Data for Super App Super Sale */
-  /* Data for Super App Super Sale */
   {
     id: "SASL00005",
     image: Watch,
-
     brand: "vietjet",
     name: "Watch",
     origin: "Super Sale",
-    salePrice: 334000,
+    salePrice: 500000,
     originalPrice: 534000,
-    salePercent: "40%",
+    salePercent: "5%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Dien Tu Cong Nghe",
   },
 
-  /* End of Data for Super App Super Sale */
-  /* End of Data for Super App Super Sale */
-  /* End of Data for Super App Super Sale */
-
-  /* Data for Biggest Beauty */
-  /* Data for Biggest Beauty */
-  /* Data for Biggest Beauty */
-
+  // Biggest Beauty
   {
     id: "BB00001",
     image: Beauty1,
-
     brand: "vietjet",
     name: "Nuoc hoa 1",
     origin: "Biggest Beauty",
-    salePrice: 334000,
+    salePrice: 300000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Lam Dep Suc Khoe",
   },
-
   {
     id: "BB00002",
     image: Beauty2,
-
     brand: "vietjet",
     name: "Nuoc hoa 2",
     origin: "Biggest Beauty",
-    salePrice: 6334000,
+    salePrice: 254000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
+    category: "Lam Dep Suc Khoe",
   },
-
   {
     id: "BB00003",
     image: Beauty3,
     brand: "vietjet",
     name: "Nuoc hoa 3",
     origin: "Biggest beauty",
-    salePrice: 334000,
-    originalPrice: 534000,
+    salePrice: 644000,
+    originalPrice: 1034000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Lam Dep Suc Khoe",
   },
   {
     id: "BB00004",
     image: Beauty4,
-
     brand: "vietjet",
     name: "Nuoc hoa 4",
     origin: "Biggest beauty",
@@ -501,41 +461,37 @@ const Data = [
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Lam Dep Suc Khoe",
   },
   {
     id: "BB00005",
     image: Beauty5,
-
     brand: "vietjet",
     name: "Nuoc hoa 5",
     origin: "Biggest beauty",
-    salePrice: 334000,
+    salePrice: 134000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
+    category: "Lam Dep Suc Khoe",
   },
 
-  /* End of Biggest Beauty*/
-  /* End of Biggest Beauty*/
-  /* End of Biggest Beauty*/
-
-  /* Suggestions for You */
-  /* Suggestions for You */
-  /* Suggestions for You */
+  // Suggestions for You
   {
     id: "SG00001",
     image: DepLe,
     brand: "vietjet",
     name: "Dép Lê",
     origin: "Merch",
-    salePrice: 334000,
+    salePrice: 12000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thoi Trang Nam Nu",
   },
   {
     id: "SG00002",
@@ -543,13 +499,14 @@ const Data = [
     brand: "Hugo Boss",
     name: "Bóp Ví",
     origin: "Travelmall - HD",
-    salePrice: 6334000,
+    salePrice: 60000000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
     isBestSale: true,
+    category: "Thoi Trang Nam Nu",
   },
   {
     id: "SG00003",
@@ -557,12 +514,13 @@ const Data = [
     brand: "vietjet",
     name: "Day chuyền",
     origin: "Merch",
-    salePrice: 334000,
+    salePrice: 2000000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Trang Suc",
   },
   {
     id: "SG00004",
@@ -570,12 +528,13 @@ const Data = [
     brand: "Hugo Boss",
     name: "Ba lo",
     origin: "Travelmall - HD",
-    salePrice: 6334000,
+    salePrice: 3400000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thoi Trang Nam Nu",
   },
   {
     id: "SG00005",
@@ -583,12 +542,13 @@ const Data = [
     brand: "Hugo Boss",
     name: "Áo",
     origin: "Travelmall - HD",
-    salePrice: 6334000,
+    salePrice: 4250000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thoi Trang Nam Nu",
   },
   {
     id: "SG00006",
@@ -596,13 +556,14 @@ const Data = [
     brand: "Hugo Boss",
     name: "Vòng Cổ Tay",
     origin: "Travelmall - HD",
-    salePrice: 334000,
+    salePrice: 3334000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Trang Suc",
   },
   {
     id: "SG00007",
@@ -610,13 +571,14 @@ const Data = [
     brand: "Hugo Boss",
     name: "Modal 2",
     origin: "Travelmall - HD",
-    salePrice: 6334000,
+    salePrice: 4300000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Dien Tu Cong Nghe",
   },
   {
     id: "SG00008",
@@ -624,13 +586,14 @@ const Data = [
     brand: "Hugo Boss",
     name: "Bóp Ví",
     origin: "Travelmall - HD",
-    salePrice: 334000,
+    salePrice: 3344000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Thoi Trang Nam Nu",
   },
   {
     id: "SG00009",
@@ -638,13 +601,14 @@ const Data = [
     brand: "Hugo Boss",
     name: "Vòng cổ tay",
     origin: "Travelmall - HD",
-    salePrice: 254000,
+    salePrice: 1254000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Trang Suc",
   },
   {
     id: "SG00010",
@@ -652,13 +616,14 @@ const Data = [
     brand: "Hugo Boss",
     name: "Bop Vi",
     origin: "Travelmall - HD",
-    salePrice: 6334000,
+    salePrice: 7384000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Thoi Trang Nam Nu",
   },
   {
     id: "SG00011",
@@ -666,13 +631,14 @@ const Data = [
     brand: "vietjet",
     name: "Headphone",
     origin: "Travelmall - HD",
-    salePrice: 334000,
+    salePrice: 126000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Dien Tu Cong Nghe",
   },
   {
     id: "SG00012",
@@ -680,13 +646,14 @@ const Data = [
     brand: "vietjet",
     name: "Bia",
     origin: "hugo Boss",
-    salePrice: 334000,
+    salePrice: 700000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isBestSale: true,
     isDutyFree: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "SG00013",
@@ -694,12 +661,13 @@ const Data = [
     brand: "vietjet",
     name: "4 Connors Can",
     origin: "Vietjet",
-    salePrice: 334000,
+    salePrice: 120000,
     originalPrice: 534000,
     salePercent: "40%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "SG00014",
@@ -707,12 +675,13 @@ const Data = [
     brand: "Klairs",
     name: "Gin",
     origin: "Vietjet",
-    salePrice: 334000,
+    salePrice: 34000,
     originalPrice: 534000,
     salePercent: "49%",
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
   {
     id: "SG00015",
@@ -726,6 +695,7 @@ const Data = [
     soldUnits: "3.3k",
     reviewCount: 136,
     isDutyFree: true,
+    category: "Thuc Pham Nuoc Giai Khat",
   },
 ];
 

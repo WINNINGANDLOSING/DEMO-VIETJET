@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import thanhToanNgay from "../../images/thanhToanNgay.png";
 import thanhToanSau from "../../images/thanhToanSau.png";
 import bayTruocTraSau from "../../images/bayTruocTraSau.png";
@@ -17,11 +17,72 @@ const CartStage2 = () => {
   let location = useLocation();
   let totalPrice = location.state.totalPrice;
   let isBoughtFromDutyStore = location.state.isBoughtFromDutyStore;
+  let navigate = useNavigate();
 
-  const [isCVVVisible, setIsCVVVisible] = useState(true);
 
-  const toggleVisibility = () => {
-    setIsCVVVisible(!isCVVVisible);
+
+  let acceptedVoucherCodes = [
+    { code: "231212K", discount: 5000000 },
+    { code: "XYZ123", discount: 100000 },
+    { code: "GREATSALE", discount: 2000000 },
+    { code: "DISCOUNT50", discount: 500000 },
+    { code: "SUMMER20", discount: 1500 },
+    { code: "SAVEMORE", discount: 30000 },
+    { code: "B1G1FREE", discount: 1000 },
+    { code: "WELCOME10", discount: 10000 },
+    { code: "SPRING25", discount: 250000 },
+    { code: "HOLIDAY50", discount: 5000 },
+  ];
+
+  const [inputFieldVoucher, SetInputFieldVoucher] = useState("");
+  const [isEnteredVoucher, SetIsEnteredVoucher] = useState(false);
+  const [voucherHistory, setVoucherHistory] = useState("");
+  const [discountValue, setDiscountValue] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(totalPrice - discountValue);
+  const handleOnChangeVoucher = (e) => {
+    SetInputFieldVoucher(e.target.value);
+  };
+
+  const handleEnterVoucher = () => {
+    if (inputFieldVoucher === "") {
+      window.alert("Please enter your voucher code");
+      return null;
+    }
+    if (
+      acceptedVoucherCodes.some(
+        (voucherCode) =>
+          voucherCode.code.toString() === inputFieldVoucher.toString()
+      )
+    ) {
+      window.alert("Voucher Applied Successfully.");
+      const chosenVoucher = acceptedVoucherCodes.find(
+        (voucherCode) =>
+          voucherCode.code.toString() === inputFieldVoucher.toString()
+      );
+      setDiscountValue(chosenVoucher.discount);
+      setVoucherHistory(inputFieldVoucher);
+      SetIsEnteredVoucher(true);
+    } else {
+      window.alert("Fail to apply voucher.");
+    }
+    SetInputFieldVoucher("");
+  };
+
+  useEffect(() => {
+    return setFinalPrice(totalPrice - discountValue);
+  }, [discountValue]);
+
+  const handleRemoveVoucher = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to revoke your voucher? This action will cancel all discounts associated with the voucher."
+      )
+    ) {
+      window.alert("Voucher revoked successfully");
+      SetIsEnteredVoucher(false);
+      setVoucherHistory("");
+      setDiscountValue(0);
+    }
   };
 
   let dutyFee = isBoughtFromDutyStore ? 6000 : 0;
@@ -115,18 +176,26 @@ const CartStage2 = () => {
                 <div className="bg-gray-100 space-y-1 rounded-[8px] py-3 px-5 text-[18px] flex flex-col">
                   <div className="flex justify-between ">
                     <span> Tạm tính </span>
-                    <span className="font-bold"> 3,499,000 VND </span>
-                  </div>
-                  <div className="flex justify-between ">
-                    <span> Mã giảm giá/phiếu quà tặng </span>
-                    <span className="text-green-500 font-bold">
-                      {" "}
-                      -1,000,000 VND{" "}
+                    <span className="font-bold text-[25px] text-blue-400">
+                      {totalPrice.toLocaleString()} VND
                     </span>
                   </div>
                   <div className="flex justify-between ">
+                    <span> Mã giảm giá/phiếu quà tặng </span>
+                    {discountValue > 0 && (
+                      <span className="text-green-500 text-[25px] font-bold">
+                        - {discountValue.toLocaleString()} VND
+                      </span>
+                    )}
+                    {discountValue === 0 && (
+                      <span className="text-gray-500 font-bold">N/A</span>
+                    )}
+                  </div>
+                  <div className="flex justify-between ">
                     <span> Tổng thanh toán </span>
-                    <span className="font-bold"> 2,499,000 VND </span>
+                    <span className="font-bold text-[25px] text-orange-500">
+                      {finalPrice.toLocaleString()} VND
+                    </span>
                   </div>
                 </div>
                 <span className="text-[13px] self-center">
@@ -134,33 +203,66 @@ const CartStage2 = () => {
                   kiện vé và Quy định vật dụng bị cấm mang lên máy bay
                 </span>
                 <div className="flex space-x-3 justify-center">
-                  <div className="flex rounded-[8px] w-56 py-5 text-white font-bold text-[18px] items-center justify-center bg-gradient-to-r from-green-600 via bg-green-200 to-green-400 cursor-pointer transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg">
+                  <div
+                    className="flex rounded-[8px] w-56 py-5 text-white font-bold text-[18px] items-center justify-center bg-gradient-to-r from-green-600 via bg-green-200 to-green-400 cursor-pointer transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
+                    onClick={() => navigate(`/Home`)}
+                  >
                     Mua sắm thêm
                   </div>
-                  <div className="flex rounded-[8px] w-56 text-black font-bold text-[18px] items-center justify-center bg-gradient-to-r from-yellow-500 via bg-yellow-300 to-yellow-200 cursor-pointer transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg">
+                  <NavLink
+                    className="flex rounded-[8px] w-56 text-black font-bold text-[18px] items-center justify-center bg-gradient-to-r from-yellow-500 via bg-yellow-300 to-yellow-200 cursor-pointer transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
+                    to={`/ProductDetail/CartStage1/CartStage2/FinalCartStage`}
+                    state={{ finalPrice: finalPrice }}
+                  >
                     Thanh toán
-                  </div>
+                  </NavLink>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="flex max-w-[22rem] max-h-fit mt-5 pb-5 flex-col grow rounded-[8px] bg-white">
-            <div className="mx-3 py-3 border border-b-gray-200 border-l-0 border-r-0 border-t-0 flex justify-between">
-              <input
-                type="text"
-                placeholder="Nhập mã voucher"
-                className="outline-none"
-              />
-              <span className="text-blue-500 cursor-pointer">Apply</span>
-            </div>
+            {!isEnteredVoucher && (
+              <div className="mx-3 py-3 border border-b-gray-200 border-l-0 border-r-0 border-t-0 flex justify-between">
+                <input
+                  type="text"
+                  id="voucher"
+                  name="voucher"
+                  value={inputFieldVoucher}
+                  placeholder="Nhập mã voucher"
+                  className="outline-none"
+                  onChange={handleOnChangeVoucher}
+                />
+                <span
+                  className="text-blue-500 cursor-pointer"
+                  onClick={() => handleEnterVoucher()}
+                >
+                  Apply
+                </span>
+              </div>
+            )}
+
+            {isEnteredVoucher && (
+              <div className="mx-3 py-3 border border-b-gray-200 items-center border-l-0 border-r-0 border-t-0 flex justify-between">
+                <span> Voucher applied: </span>
+                <span className="text-green-400 text-lg font-bold">
+                  {voucherHistory}
+                </span>
+                <div
+                  className=" p-1 rounded-md bg-white text-sm text-red-300 hover:text-red-600 transition-colors duration-300 cursor-pointer"
+                  onClick={() => handleRemoveVoucher()}
+                >
+                  Remove
+                </div>
+              </div>
+            )}
 
             <div className="mx-3 space-y-3 py-3 border border-b-gray-200 border-l-0 border-r-0 border-t-0">
               <span className="font-bold"> Price Detail (2 items)</span>
               <div className="flex justify-between">
                 <span className="text-gray-400"> Subtotal </span>
                 <span className="text-gray-500 font-bold">
-                  {(totalPrice).toLocaleString()}d
+                  {totalPrice.toLocaleString()}d
                 </span>
               </div>
               <div className="flex justify-between">
@@ -186,7 +288,7 @@ const CartStage2 = () => {
             <div className="mx-3 pt-10 flex justify-between items-center">
               <span className="font-bold"> Tổng</span>
               <span className="text-[25px] font-bold text-red-500">
-                {(totalPrice + dutyFee).toLocaleString()}
+                {(finalPrice + dutyFee ).toLocaleString()}
                 <span> VND </span>
               </span>
             </div>

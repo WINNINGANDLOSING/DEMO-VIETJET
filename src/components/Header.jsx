@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import phoneCallLogo from "../images/phoneCallLogo.png";
 import thongBaoLogo from "../images/thongBaoLogo.png";
 import trungTamTroGiupLogo from "../images/trungTamTroGiupLogo.png";
@@ -9,7 +9,7 @@ import deliveryMethodLogo1 from "../images/deliveryMethodLogo1.png";
 import deliveryMethodLogo2 from "../images/deliveryMethodLogo2.png";
 import searchLogo from "../images/searchLogo.png";
 import cartLogo from "../images/cartLogo.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import searchByCategories from "../images/sortByCategories.png";
 import muaVeLogo from "../images/muaVeLogo.png";
 import skyShopLogo from "../images/skyShopLogo.png";
@@ -17,7 +17,7 @@ import khachSanLogo from "../images/khachSanLogo.png";
 import skyHolidayLogo from "../images/skyHolidayLogo.png";
 import thueXeLogo from "../images/thueXeLogo.png";
 import baoHiemLogo from "../images/baoHiemLogo.png";
-
+import { globalContext } from "../context";
 // min-w-fit: Makes the child element just wide enough to fit its content inside its parent container. It won't be wider than needed.
 
 // min-w-max: Makes the child element as wide as its parent container allows. It can be as wide as the parent container, but not wider.
@@ -27,8 +27,28 @@ import baoHiemLogo from "../images/baoHiemLogo.png";
 // min-w-full: Makes the child element fill the entire width of its parent container. It stretches to be as wide as its parent.
 const Header = () => {
   let navigate = useNavigate();
+  const { deliveryMethod, setDeliveryMethod } = globalContext();
+  const [inputSearchFieldKeyword, setInputSearchFieldKeyword] = useState("");
+  const handleOnInputSearchFieldOnChange = (e) => {
+    setInputSearchFieldKeyword(e.target.value);
+  };
+
+  const handleOnClickSearch = () => {
+    if (inputSearchFieldKeyword.toString() === "") {
+      window.alert("Please enter something in the input field.");
+      return null;
+    } else {
+      navigate(`/SearchResultPage`, {
+        state: { keyword: inputSearchFieldKeyword },
+      });
+      setInputSearchFieldKeyword("");
+    }
+  };
+
+  const handleOnChangeDeliveryMethod = (e) => {
+    setDeliveryMethod(e.target.value);
+  };
   return (
-    
     <header className="w-screen overflow-x-hidden overflow-y-hidde">
       {/* Top Bar */}
       {/* The first row of the header*/}
@@ -64,11 +84,22 @@ const Header = () => {
       {/* The second row of the header */}
       {/* use px-20 because the red background must be from start to finish, content is 5rem from left*/}
       <div className="bg-red-600 text-white flex items-center px-28 py-5">
-        <img src={vietJetAirLogo} className="h-8 cursor-pointer appearance-none outline-none" onClick={() => {navigate(``)}} />
+        <img
+          src={vietJetAirLogo}
+          className="h-8 cursor-pointer appearance-none outline-none"
+          onClick={() => {
+            navigate(`/Home`);
+          }}
+        />
         {/* Delivery Method container*/}
         <div className="flex items-center ml-8 pl-3 bg-red-700 min-w-80 min-h-10 rounded-lg">
           <img src={deliveryMethodLogo1} className="w-5 h-5" />
-          <select className="text-white pl-2 outline-none appearance-none  bg-red-700 h-6">
+          <select
+            className="text-white pl-2 outline-none appearance-none  bg-red-700 h-6"
+            id="option"
+            value={deliveryMethod}
+            onChange={handleOnChangeDeliveryMethod}
+          >
             <option value="" disabled selected>
               Delivery Method
             </option>
@@ -84,12 +115,27 @@ const Header = () => {
           <input
             placeholder="Tìm kiếm theo tên sản phẩm, hãng, cửa hàng"
             type="text"
+            id="searchKeyWord"
+            name="searchKeyWord"
             className="w-96 appearance-none text-black outline-none flex-grow"
+            value={inputSearchFieldKeyword}
+            onChange={handleOnInputSearchFieldOnChange}
           ></input>
-          <img src={searchLogo} className="w-10 h-8 mr-2" />
+          {/* navigate(`/ProductDetail/CartStage1/CartStage2`, {
+                          state: {
+                            totalPrice: JSON.parse(JSON.stringify(totalPrice)),
+                            isBoughtFromDutyStore: isBoughtFromDutyStore,
+                          },*/}
+          <div className="cursor-pointer" onClick={() => handleOnClickSearch()}>
+            <img src={searchLogo} className="w-10 h-8 mr-2" />
+          </div>
         </div>
         {/* cart logo*/}
-        <img src={cartLogo} className="w-10 h-10 ml-8 cursor-pointer" onClick={() => {navigate(`/CartStage1`);}}/>
+        <img
+          src={cartLogo}
+          className="w-10 h-10 ml-8 cursor-pointer"
+          onClick={() => navigate(`/CartStage1`)}
+        />
       </div>
       {/* The third row (the biggest one)*/}
       <div className="flex ml-28 bg-white">

@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -7,6 +8,13 @@ export default {
         128: "32rem", // Equivalent to 512px
         160: "40rem", // Equivalent to 640px
         // Add more custom sizes as needed
+      },
+      fontFamily: {
+        JambonoMedium: ["Jambono Medium", "serif"],
+        JambonoBlack: ["Jambono Black", "serif"],
+        KoHo: ["KoHo", "serif"],
+        Tilt: ["Tilt Prism", "serif"],
+        Tiny5: ["Tiny5", "sans-serif"]
       },
       width: {
         128: "32rem",
@@ -69,7 +77,8 @@ export default {
       },
 
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(90deg, #F9A51A -4.93%, #FBB612 18.27%, #FFDD00 71.59%)',
+        "custom-gradient":
+          "linear-gradient(90deg, #F9A51A -4.93%, #FBB612 18.27%, #FFDD00 71.59%)",
       },
     },
   },

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from "react";
 
 import creditCards from "../../../images/creditCards.png";
 import viSkyPay from "../../../images/viSkyPay.png";
@@ -282,9 +282,8 @@ const ThanhToanNgayTab = () => {
           </span>
         </div>
       </div>
-
     </div>
   );
-}
+};
 
 export default ThanhToanNgayTab;

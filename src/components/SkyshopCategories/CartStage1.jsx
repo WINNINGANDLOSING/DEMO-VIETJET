@@ -2,43 +2,54 @@ import React, { useState, useEffect } from "react";
 import { NavLink, Navigate, useNavigate, useLocation } from "react-router-dom";
 import pickupLocation from "../../images/pickupLocation.png";
 
-import { globalContext } from "../../ContextCopy";
 import CartCard from "../Helpers/CartCard";
 const CartStage1 = () => {
   {
     /* padding top 5 for All*/
   }
 
-  const location = useLocation();
+  let location = useLocation();
+  let data = "";
+  let purchaseType = "";
+  const [cartItems1, setCartItems1] = useState(() => {
+    return JSON.parse(localStorage.getItem("Items")) || [];
+  });
+  let count = location.state.count;
+  useEffect(() => {
+    try {
+      data = location.state?.data;
+      purchaseType = location.state?.purchaseType;
+      if (data && purchaseType) {
+        // Function to add new items to the local storage without overwriting it
+        const handleAddNewItemToLocalStorage = () => {
+          if (purchaseType === "muaNgay") {
+            localStorage.clear();
+          }
+          // If localStorage contains any item, return the list of items, else if localStorage is empty, return []
+          const oldItems = JSON.parse(localStorage.getItem("Items")) || [];
+          const newItem = data;
+          // If there is value in oldItems already match the newItem, this ensures only unique items get pushed in
+          if (
+            !oldItems.some(
+              (item) => JSON.stringify(item) === JSON.stringify(newItem)
+            )
+          ) {
+            oldItems.push(newItem);
+          }
+          localStorage.setItem("Items", JSON.stringify(oldItems));
 
-  const data = location.state.data;
-  const purchaseType = location.state.purchaseType;
+          setCartItems1(JSON.parse(localStorage.getItem("Items"))); // Set the state with the updated list
+        };
 
-  let cartItems1 = [];
-  // Function to add new items to the local storage without overwriting it
-  const handleAddNewItemToLocalStorage = () => {
-    if (purchaseType === "muaNgay") {
-      localStorage.clear();
+        handleAddNewItemToLocalStorage();
+      } else {
+        // Load items from local storage if location state is not available
+        setCartItems1(JSON.parse(localStorage.getItem("Items")) || []);
+      }
+    } catch (err) {
+      console.error("Error loading cart items:", err);
     }
-    // If localStorage contains any item, return the list of items, else if localStorage is empty, return []
-    const oldItems = JSON.parse(localStorage.getItem("Items")) || [];
-    const newItem = data;
-    // If there is value in oldItems already match the newItem, this ensure only unique items get pushed in
-    if (
-      !Object.values(oldItems).some(
-        (item) => JSON.stringify(item) === JSON.stringify(newItem)
-      )
-    ) {
-      oldItems.push(newItem);
-    }
-
-    localStorage.setItem("Items", JSON.stringify(oldItems));
-    cartItems1 = JSON.parse(localStorage.getItem("Items"));
-  };
-
-  handleAddNewItemToLocalStorage();
-
- Object.values(cartItems1).map((cartItem => (console.log(cartItem))))
+  }, [location.state]);
 
   // const cartItems1 = [
   //   PrebookMealSample1,
@@ -50,15 +61,16 @@ const CartStage1 = () => {
 
   const [isSelectedAll, setIsSelectedAll] = useState(false);
   const [cartTracker, setCartTracker] = useState([]); // List of all cart items
-  const [confirmedCartTracker, setConfirmedCartTracker] = useState([]); // List of selected cart items
+  const [confirmedCartTracker, setConfirmedCartTracker] = useState(""); // List of selected cart items
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [isBoughtFromDutyStore, setIsBoughtFromDutyStore] = useState(false);
+
   let navigate = useNavigate();
 
   const handleOnCheckSelectAll = () => {
     if (!isSelectedAll) {
-      setConfirmedCartTracker(cartTracker);
+      setConfirmedCartTracker(cartTracker); // This is the reason why we need cartTracker
     } else {
       setConfirmedCartTracker([]);
     }
@@ -90,18 +102,23 @@ const CartStage1 = () => {
     );
   }, [cartTracker, confirmedCartTracker]);
 
-  /* Calculate the total price */
-
-  // Object.keys(cartTracker).forEach((cartItem) => {
-  //   console.log(cartTracker[cartItem]);
-  //   const { finalPrice } = cartTracker[cartItem];
-  //   calculatePrice(finalPrice);
-  // });
-  // console.log(sum)
+  // Function to clear cart
+  const handleClearCart = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to clear all your cart items ? All your items will be removed in this section."
+      )
+    ) {
+      localStorage.clear(); // Update state of localStorage so that to keep data persistent
+      setCartItems1([]); // Update state of cartItems mainly for display
+      setConfirmedCartTracker([]);
+    }
+  };
 
   return (
     <div className="pt-5 pl-28 pr-10 min-h-screen bg-productList">
       <span className="text-[14px]"> Home &gt; Cart </span>
+      <span> ITEM COUNT </span>
       <div className="mt-5 flex flex-col space-y-">
         <span className="text-[35px] font-bold"> Giỏ hàng </span>
         <span className="text-[25px]"> Airport pick-up details </span>
@@ -134,8 +151,14 @@ const CartStage1 = () => {
               </span>
               <div
                 style={{ background: "#F9FAFA" }}
-                className="p-5 flex mt-5 flex-col space-y-2"
+                className="p-5 flex mt-5 flex-col space-y-2 relative"
               >
+                <div
+                  className="absolute right-2 cursor-pointer transition-transform transform hover:text-red-500"
+                  onClick={() => handleClearCart()}
+                >
+                  Clear All
+                </div>
                 <div className="flex items-center space-x-3">
                   <img src={pickupLocation} className="w-5 h-5" />
                   <span className="font-bold text-[18px]">
@@ -149,19 +172,23 @@ const CartStage1 = () => {
                   View store info
                 </NavLink>
               </div>
-                {Object.values(cartItems1).map((cartItem) => {
-                  const { image, ...content } = cartItem;
-                  return <CartCard
+              {Object.values(cartItems1).map((cartItem) => {
+                const { image, ...content } = cartItem;
+                
+                return (
+                  <CartCard
                     salesCounter="Eastern@Cenang"
                     image={image}
                     content={content}
+                    count={count}
                     isSelectedAll={isSelectedAll}
                     confirmedCartTracker={confirmedCartTracker}
                     setConfirmedCartTracker={setConfirmedCartTracker}
-                    cartTracker={cartTracker}
                     setCartTracker={setCartTracker}
-                  />;
-                })}
+                    cartItems1={cartItems1}
+                  />
+                );
+              })}
 
               {/* {purchaseType === "muaNgay" && (
                 <CartCard
@@ -256,24 +283,34 @@ const CartStage1 = () => {
               Chọn phương thức thanh toán
             </NavLink> */}
 
-            <div
-              className="flex mt-7 items-center justify-center z-30 appearance-none self-center bg-custom-gradient w-80 rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
-              onClick={() => {
-                Object.keys(confirmedCartTracker).length > 0
-                  ? window.confirm(
-                      "Are you sure you want to proceed to the checkout section ? "
-                    )
-                    ? navigate(`/ProductDetail/CartStage1/CartStage2`, {
-                        state: {
-                          totalPrice: JSON.parse(JSON.stringify(totalPrice)),
-                          isBoughtFromDutyStore: isBoughtFromDutyStore,
-                        },
-                      })
-                    : null
-                  : window.alert("Please select at least one item to proceed.");
-              }}
-            >
-              Chọn phương thức thanh toán
+            <div className="flex mt-5 px-5 space-x-5 ">
+              <div
+                className="flex rounded-[8px] w-56 py-5 text-black font-bold text-[18px] items-center justify-center bg-gradient-to-r from-yellow-500 via bg-yellow-400 to-yellow-300 cursor-pointer transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg"
+                onClick={() => {
+                  Object.keys(confirmedCartTracker).length > 0
+                    ? window.confirm(
+                        "Are you sure you want to proceed to the checkout section ? "
+                      )
+                      ? navigate(`/ProductDetail/CartStage1/CartStage2`, {
+                          state: {
+                            totalPrice: JSON.parse(JSON.stringify(totalPrice)),
+                            isBoughtFromDutyStore: isBoughtFromDutyStore,
+                          },
+                        })
+                      : null
+                    : window.alert(
+                        "Please select at least one item to proceed."
+                      );
+                }}
+              >
+                Tiếp tục
+              </div>
+              <div
+                className="flex rounded-[8px] w-56 py-5 text-white font-bold text-[18px] items-center justify-center bg-gradient-to-r from-green-600 via bg-green-200 to-green-400 cursor-pointer transition-transform transform hover:scale-105 hover:text-orange-300 hover:shadow-lg"
+                onClick={() => navigate(`/Home`)}
+              >
+                Mua sắm thêm
+              </div>
             </div>
           </div>
         </div>

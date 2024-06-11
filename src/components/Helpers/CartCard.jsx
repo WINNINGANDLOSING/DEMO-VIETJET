@@ -7,15 +7,17 @@ const CartCard = ({
   salesCounter,
   image,
   content,
+  count,
   confirmedCartTracker,
   setConfirmedCartTracker,
-  cartTracker,
+  
   setCartTracker,
+  cartItems1,
+  
 }) => {
   const { id, name, salePrice, originalPrice, salePercent, dungTich } = content;
-  
 
-  const [itemCount, setItemCount] = useState(1);
+  const [itemCount, setItemCount] = useState(count);
   const [isRemoved, SetIsRemoved] = useState(false);
 
   // In the first render, add everything to cartTracker
@@ -37,7 +39,7 @@ const CartCard = ({
     });
   }, [id, name]);
 
-  // Any item the itemCount changes, update both ConfirmedCartTracker (to get the select all functionality working) and CartTracker
+  // Anytime the itemCount changes, update both ConfirmedCartTracker (to get the select all functionality working) and CartTracker
   useEffect(() => {
     setCartTracker((prevState) => {
       const updatedCartTracker = { ...prevState };
@@ -154,6 +156,11 @@ const CartCard = ({
 
   const handleOnClickRemoveItem = () => {
     SetIsRemoved(true);
+    const items = JSON.parse(localStorage.getItem("Items"));
+    const filteredItems = items.filter((item) => item.id !== id);
+    localStorage.setItem("Items", JSON.stringify(filteredItems));
+
+    //console.log(updatedItem);
     const removeHelper = () => {
       setCartTracker((prevState) => {
         const updatedCartTracker = { ...prevState };
@@ -198,7 +205,6 @@ const CartCard = ({
     // Then the second useEffect() hook will be triggered because itemCount now has changed
     // Cannot add this function to the hook because it will lead to all items will be automatically selected in the first render
     setConfirmedCartTracker((prevState) => {
-      console.log("noway");
       const updatedConfirmedCartTracker = { ...prevState };
       if (!updatedConfirmedCartTracker[id]) {
         updatedConfirmedCartTracker[id] = {};

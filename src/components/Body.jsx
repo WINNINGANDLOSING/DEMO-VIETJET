@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 import Card from "./Helpers/Card";
 import { globalContext } from "../context";
 import PhuongThucVanChuyenModal from "./PhuongThucVanChuyenModal";
@@ -13,6 +14,9 @@ import categoriesLogo from "../images/categoriesLogo.png";
 import ad1 from "../images/ad1.png";
 import banner1 from "../images/banner1.png";
 import banner2 from "../images/banner2.png";
+import adSwitchInactive from "../images/adSwitchInactive.png";
+import adSwitchActive from "../images/adSwitchActive.png";
+
 import hotDealLogo from "../images/hotDealLogo.png";
 import vietJetAirItalicLogo from "../images/vietJetAirItalicLogo.png";
 import dienTuCongNgheLogo from "../images/dienTuCongNgheLogo.png";
@@ -37,27 +41,42 @@ import HangNgan from "../images/HangNgan.png";
 import CungVietjetBayVaoTuongLai from "../images/CungVietjetBayVaoTuongLai.png";
 import { Container } from "postcss";
 
+
 /* in here, i use componentizaiton for every item */
 const Body = () => {
+  const { deliveryMethod } = globalContext();
   const [isOpenModal, setIsOpenModal] = useState(true);
 
   const handleOnClickQuitModal = () => {
     setIsOpenModal(false);
   };
 
-  const {
-    // PrebookMealData,
-    // ExclusiveMerchData,
-    // JetCafeData,
-    // FAndBData,
-    // SuperAppSuperData,
-    // BeautyData,
-    // suggestionsData,
-    DataBase,
-  } = globalContext();
+  let images = [ad1, banner1, banner2]; // Let images have the index of 0, 1, 2 respectively
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // If prevIndex is 0:
+      // (0 + 1) % 3 = 1
+
+      // Next index will be 1 (image1).
+      // If prevIndex is 1:
+      // (1 + 1) % 3 = 2
+
+      // Next index will be 2 (image2).
+      // If prevIndex is 2 (last image):
+      // (2 + 1) % 3 = 0
+      // Next index will be 0 (image0), looping back to the start.
+
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval); // Return a cleanup function that will be called when the component unmounts or before executing the effect again
+  }, []);
+
+  const { DataBase } = globalContext();
   /* Prebook Meal */
-  console.log(DataBase);
-  console.log(typeof DataBase);
+  
 
   let PrebookMealData = Object.values(DataBase).filter((data) =>
     data.id.toString().includes("PM")
@@ -134,7 +153,7 @@ const Body = () => {
   return (
     <div className="h-[100%] p-0 m-0">
       {/* Modal implemeted here*/}
-      {isOpenModal && (
+      {!deliveryMethod && isOpenModal && (
         <PhuongThucVanChuyenModal
           isOpenModal={isOpenModal}
           handleOnClickQuitModal={handleOnClickQuitModal}
@@ -144,7 +163,7 @@ const Body = () => {
       {/* use ml-20 because the content is 5rem from left, so is the background */}
       <div className="flex flex-col mx-28 max-w-screen overflow-hidden">
         {/* The first sub-row of this 3rd row*/}
-
+        {/* Deleted because header already has this part */}
         {/* The second sub-row of this 3rd row*/}
         <div className="flex flex-row">
           {/* Column 1 of the second sub-row */}
@@ -177,11 +196,38 @@ const Body = () => {
             </div>
           </div>
           {/* Column 2 of the second sub-row*/}
-          <div className="flex ml-3  bg-red-700 w-widthForAd h-heightForAd">
+          <div className="flex ml-3  bg-red-700 w-widthForAd h-heightForAd relative">
             {/* Sets the minimum width of the child element to 100% of its parent's
             width. It allows the child element to expand and fill the entire
             width of its parent container. */}
-            <img src={ad1} alt="Ad 1" className="min-w-full min-h-full h-20" />
+            <img
+              src={images[currentImageIndex]}
+              alt={`Ad${currentImageIndex + 1}`}
+              className="min-w-full min-h-full h-20 z-20"
+            />
+            <div className="flex space-x-3 w-full absolute bottom-1 z-30  items-center justify-center ">
+              <img
+                src={
+                  currentImageIndex === 0 ? adSwitchActive : adSwitchInactive
+                }
+                className="w-3 h-3 cursor-pointer"
+                onClick={() => setCurrentImageIndex(0)}
+              />
+              <img
+                src={
+                  currentImageIndex === 1 ? adSwitchActive : adSwitchInactive
+                }
+                className="w-3 h-3 cursor-pointer"
+                onClick={() => setCurrentImageIndex(1)}
+              />
+              <img
+                src={
+                  currentImageIndex === 2 ? adSwitchActive : adSwitchInactive
+                }
+                className="w-3 h-3 cursor-pointer"
+                onClick={() => setCurrentImageIndex(2)}
+              />
+            </div>
           </div>
           {/* Column 3 of the second sub-row*/}
           <div className="flex ml-3 flex-col h-heightForBanner">
@@ -196,48 +242,81 @@ const Body = () => {
           <img src={hotDealLogo} className="w-14 h-14" />
           <p> Hot Deal</p>
         </div>
-
         <div className="flex flex-col  items-center text-center">
           <img src={vietJetAirItalicLogo} className="w-14 h-14" />
           <p> Vietjet Air</p>
         </div>
-
-        <div className="flex flex-col items-center text-center w-20">
+        <NavLink
+          className="flex flex-col items-center text-center w-20"
+          to={`/ProductList`}
+          state={{
+            categoryType: "Dien Tu Cong Nghe",
+            categoryName: "Điện Tử Công Nghệ",
+          }}
+        >
           <img src={dienTuCongNgheLogo} className="w-14 h-14" />
           <p> Điện tử công nghệ </p>
-        </div>
-
-        <div className="flex flex-col items-center text-center w-20">
-          <img src={lamDepSucKhoeLogo} className="w-14 h-14" />
+        </NavLink>
+        {/* state={{ pickupType: JSON.parse(JSON.stringify(selectedOption)) }} */}
+        <NavLink
+          className="flex flex-col items-center text-center w-20"
+          to={`/ProductList`}
+          state={{
+            categoryType: "Lam Dep Suc Khoe",
+            categoryName: "Làm Đẹp & Sức Khoẻ",
+          }}
+        >
+          <img src={lamDepSucKhoeLogo} className="w-14 h-14 cursor-pointer" />
           <p> Làm đẹp sức khoẻ</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center w-20">
+        </NavLink>
+        <NavLink
+          className="flex flex-col items-center text-center w-20"
+          to={`/ProductList`}
+          state={{
+            categoryType: "Thoi Trang Nam Nu",
+            categoryName: "Thời Trang Nam Nữ",
+          }}
+        >
           <img src={thoiTrangNamNuLogo} className="w-14 h-14" />
           <p> Thời trang nam nữ</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center w-20">
+        </NavLink>
+        <NavLink
+          className="flex flex-col items-center text-center w-20"
+          to={`/ProductList`}
+          state={{
+            categoryType: "Do Dung Gia Dinh",
+            categoryName: "Đồ Dùng Gia Đình",
+          }}
+        >
           <img src={doDungGiaDinhLogo} className="w-14 h-14" />
           <p> Đồ dùng gia đình</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center w-20">
+        </NavLink>
+        <NavLink
+          className="flex flex-col items-center text-center w-24"
+          to={`/ProductList`}
+          state={{
+            categoryType: "Thuc Pham Nuoc Giai Khat",
+            categoryName: "Thực Phẩm và Nước Giải Khát",
+          }}
+        >
           <img src={thucPhamNuocGiaiKhatLogo} className="w-14 h-14" />
-          <p> Thực phẩm nước giải khát</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center w-20">
+          <p> Thực phẩm và nước giải khát</p>
+        </NavLink>
+        <NavLink
+          className="flex flex-col items-center text-center w-20"
+          to={`/ProductList`}
+          state={{ categoryType: "", categoryName: "Hoạt Động Ngoài Trời" }}
+        >
           <img src={hoatDongNgoaiTroiLogo} className="w-10 h-10" />
           <p> Hoạt động ngoài trời</p>
-        </div>
+        </NavLink>
       </div>
 
-      <div className="flex flex-col space-y-8 pl-[110px] pr-[110px] w-screen">
+      <div className="flex flex-col mt-10 space-y-8 pl-[110px] pr-[110px] w-screen">
         {/* Prebook Meal div*/}
         <div className="bg-prebookMeal relative rounded-[8px] px-11 pt-4 pb-10">
           <div className="flex justify-between text-white text-[24px]">
-            <span className="font-bold">
+            <span className="font-JambonoBlack">
               Prebook meal - Jet cafe | Sale up to 30%
             </span>
             <span className="text-sm">Xem tất cả</span>
@@ -257,7 +336,7 @@ const Body = () => {
         {/* Exclusive Vietjet Air merchandise */}
         <div className="bg-white px-8 pt-5 pb-5 relative">
           <div className="flex justify-between text-[24px]">
-            <span className="text-exclusiveVietjetAir font-bold">
+            <span className="text-exclusiveVietjetAir font-JambonoBlack">
               Exclusive Vietjet Air merchandise | Up to 30% off
             </span>
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
@@ -271,7 +350,6 @@ const Body = () => {
               <Card key={index} data={data} />
             ))}
           </div>
-
           <img
             src={videoSamplePlayButton}
             className="w-16 h-16 absolute z-30 top-1/2 transform -translate-y-1/2 right-[-2rem] cursor-pointer"
@@ -316,7 +394,7 @@ const Body = () => {
         {/* Jet Cafe */}
         <div className="bg-white px-8 pt-5 pb-5 relative">
           <div className="flex justify-between text-[24px]">
-            <span className="text-exclusiveVietjetAir font-bold">
+            <span className="text-exclusiveVietjetAir font-JambonoBlack">
               Jet Cafe | Up to 30% off when pre-book
             </span>
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
@@ -350,7 +428,7 @@ const Body = () => {
         {/* F&B */}
         <div className="bg-white px-8 pt-5 pb-5 relative">
           <div className="flex justify-between text-[24px]">
-            <span className="text-exclusiveVietjetAir font-bold">
+            <span className="text-exclusiveVietjetAir font-JambonoBlack">
               F&B | Up to 30% off when pre-book
             </span>
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
@@ -383,7 +461,7 @@ const Body = () => {
         {/* Super app Super Sale */}
         <div className="bg-white px-8 pt-5 pb-5 relative">
           <div className="flex justify-between text-[24px]">
-            <span className="text-exclusiveVietjetAir font-bold">
+            <span className="text-exclusiveVietjetAir font-JambonoBlack">
               Super app Super sale | Up to 30% off when pre-book
             </span>
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
@@ -417,7 +495,7 @@ const Body = () => {
         {/* Biggest Beauty travel deals */}
         <div className="bg-white px-8 pt-5 pb-5 relative">
           <div className="flex justify-between text-[24px]">
-            <span className="text-exclusiveVietjetAir font-bold">
+            <span className="text-exclusiveVietjetAir font-JambonoBlack">
               Biggest Beauty travel deals | Up to 30% off when pre-book
             </span>
             <span className="text-sm text-exclusiveVietjetAir">Xem tất cả</span>
@@ -451,7 +529,7 @@ const Body = () => {
         {/* Top Categories */}
         <div className=" px-11">
           <div className="flex justify-between text-[24px]">
-            <span className="text-exclusiveVietjetAir font-bold">
+            <span className="text-exclusiveVietjetAir font-JambonoBlack">
               Top Categories
             </span>
           </div>

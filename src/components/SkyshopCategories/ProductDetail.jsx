@@ -3,28 +3,37 @@ import review1 from "../../images/reviewer1.png";
 import review2 from "../../images/reviewer2.png";
 import star from "../../images/1star.png";
 import dutyFreeLogo from "../../images/dutyFreeLogo.png";
-import HyaluronicAcidHairTreatment from "../../images/HyaluronicAcidHairTreatment.png";
-import bestSale from "../../images/bestSale.png";
 import chiaSe from "../../images/chiaSe.png";
 import favorite from "../../images/favorite.png";
 import { NavLink, useLocation } from "react-router-dom";
-import { globalContext } from "../../ContextCopy";
+import { globalContext } from "../../context";
 import Card from "../Helpers/Card";
+import grayIncrement from "../../images/grayIncrement.png";
+import grayDecrement from "../../images/grayDecrement.png";
+
 const ProductDetail = () => {
   const [selectedPreview, SetSelectedPreview] = useState();
-  
 
-  
-
+  const { DataBase } = globalContext();
+  let PrebookMealData = Object.values(DataBase).filter((data) =>
+    data.id.toString().includes("PM")
+  );
+  let youMightAlsoLikeData = PrebookMealData.concat(
+    PrebookMealData,
+    PrebookMealData,
+    PrebookMealData
+  );
   const location = useLocation();
-  const data = location.state.data;
-  //console.log(data);
 
-  const previews = [data.image, data.image, data.image]
+  const data = location.state.data;
+
+  const previews = [data.image, data.image, data.image];
 
   const handleOnClickPreview = (index) => {
     SetSelectedPreview(index);
   };
+
+  const [count, setCount] = useState(1);
   return (
     <div className="bg-productList px-28 pt-5 space-y-10 min-h-screen">
       {/* padding top 5 for All*/}
@@ -44,13 +53,20 @@ const ProductDetail = () => {
           </div>
           {/* This should take 30% */}
           <div className="flex grow p-5  flex-col">
-            {data.isDutyFree && (
-              <div className="flex flex-row items-center ">
-                <img src={dutyFreeLogo} className="w-5 h-5 mb-1" />
-                <span className="text-[11px] text-dutyFree"> Duty Free</span>
+            <div className="flex space-x-5 items-center">
+              {data.isDutyFree && (
+                <div className="flex flex-row items-center ">
+                  <img src={dutyFreeLogo} className="w-6   h-6   mb-1" />
+                  <span className="text-[12px] text-dutyFree"> Duty Free</span>
+                </div>
+              )}
+              <div className="bg-gray-100 px-3 py-1 text-[13px] text-brand rounded-[8px]">
+                {data.brand}{" "}
               </div>
-            )}
-            <span className="text-[24px] mt-1 font-bold">{data.name}</span>
+            </div>
+            <span className="text-[24px] mt-1 font-bold font-KoHo">
+              {data.name}
+            </span>
             <span className="text-[12px] mt-3 text-brand">{data.origin}</span>
             <div className="flex space-x-28 mt-3 items-center text-brand text-[11px] relative">
               <div className="flex justify-between space-x-1 items-center">
@@ -101,12 +117,16 @@ const ProductDetail = () => {
                 <img src={favorite} className="w-6 h-6" />
               </div>
             </div>
-            <div className="flex flex-row items-center mt-10 space-x-10">
-              <span className="text-salePrice font-bold text-[30px]">
-                {data.salePrice.toLocaleString(undefined, {})}đ
+            <div className="flex flex-row items-center mt-7 space-x-10">
+              <span className="text-salePrice font-bold text-[40px] font-JambonoMedium">
+                {data.salePrice.toLocaleString(undefined, {})}
+                <span className="text-[30px] font-">VND</span>
               </span>
-              <span className="line-through text-[12px] text-brand">
-                {data.originalPrice.toLocaleString(undefined, {})}đ
+              <span
+                className="line-through text-[15px] text-brand"
+                style={{ fontFamily: "JambonoVN Medium" }}
+              >
+                {data.originalPrice.toLocaleString(undefined, {})} VND
               </span>
               <div
                 className="w-[4.5rem] h-[2rem] text-[13px] rounded-[5px] bg-pink-100 font-bold
@@ -115,7 +135,24 @@ const ProductDetail = () => {
                 <span>{data.salePercent} off</span>
               </div>
             </div>
-            <div className="mt-5 text-gray-400"> Số lượng </div>
+            <div className="mt-7 text-gray-400 space-x-5 flex items-center">
+              <span> Số lượng </span>
+              <div className=" py-1 px-2 space-x-8 rounded-[8px] border border-gray-400 flex items-center">
+                <div
+                  className="flex bg-gray-300 border  text-white p-2 rounded-[8px] h-7 w-7 text-[25px] pb-3 items-center justify-center cursor-pointer"
+                  onClick={count - 1 > 0 ? () => setCount(count - 1) : ""}
+                >
+                  -
+                </div>
+                <span className="text-black">{count}</span>
+                <div
+                  className="flex bg-gray-400 border  text-white p-2 rounded-[8px] h-7 w-7 text-[25px] pb-3 items-center justify-center cursor-pointer"
+                  onClick={() => setCount(count + 1)}
+                >
+                  +
+                </div>
+              </div>
+            </div>
             <div className="flex space-x-5 mt-10">
               <NavLink
                 className="flex items-center justify-center z-30 appearance-none self-center bg-custom-gradient w-[150px] rounded-[8px] h-[55px] text-pickupFrom font-bold transition-transform transform hover:scale-105 hover:text-red-500 hover:shadow-lg cursor-pointer"
@@ -123,6 +160,7 @@ const ProductDetail = () => {
                 state={{
                   data: data,
                   purchaseType: "muaNgay",
+                  count: count,
                 }}
               >
                 Mua Ngay
@@ -133,6 +171,7 @@ const ProductDetail = () => {
                 state={{
                   data: data,
                   purchaseType: "themVaoGioHang",
+                  count: count,
                 }}
               >
                 Thêm vào giỏ hàng
@@ -292,24 +331,24 @@ const ProductDetail = () => {
 
       {/* Other Products*/}
 
-      {/* <div className="  space-y-5 p-8">
+      <div className="  space-y-5 p-8">
         <span className="text-[25px] font-bold"> Other Products </span>
         <div className="grid grid-cols-5 gap-y-5 gap-x-3 ">
-          {otherProductsData.map((cartItem) => {
-            return <Card sample={cartItem} />;
+          {PrebookMealData.map((cartItem) => {
+            return <Card data={cartItem} />;
           })}
         </div>
-      </div> */}
+      </div>
 
       {/* You May Also Like*/}
-      {/* <div className=" p-8 space-y-5">
+      <div className=" p-8 space-y-5">
         <span className="text-[25px] font-bold"> You might also like </span>
         <div className="grid grid-cols-5 gap-y-5 gap-x-3 ">
           {youMightAlsoLikeData.map((cartItem) => {
-            return <Card sample={cartItem} />;
+            return <Card data={cartItem} />;
           })}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

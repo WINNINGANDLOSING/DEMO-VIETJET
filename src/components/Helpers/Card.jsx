@@ -10,9 +10,9 @@ const Card = ({ data }) => {
   
   return (
     <NavLink
-      to={`Body/ProductDetail`}
+      to={`/ProductDetail`}
       state={{ data: data }}
-      className="max-w-[230px] px-5 py-4  z-30 flex flex-shrink-0 flex-col rounded-[8px] bg-white items-center relative"
+      className="max-w-[230px] px-2 py-4  z-30 flex flex-shrink-0 flex-col rounded-[8px] bg-white items-center relative"
     >
       {/* Just don't put h- here, it will automatically increase height to fix*/}
       {data.isBestSale && (
@@ -45,9 +45,9 @@ const Card = ({ data }) => {
             <span>{data.salePercent} off</span>
           </div>
         </div>
-        <div className="flex mt-5 b flex-row text-[12px] text-brand">
-          <div className="flex space-x-2 items-center relative">
-            <div className="flex space-x-1 pb-[0.1rem]">
+        <div className="flex mt-5  flex-row text-[12px] text-brand">
+          <div className="flex space-x-1 items-center relative">
+            <div className="flex space-x-1 pb-[0.1rem]  min-w-fit">
               <img
                 src={starLogo}
                 className="w-3 h-3"

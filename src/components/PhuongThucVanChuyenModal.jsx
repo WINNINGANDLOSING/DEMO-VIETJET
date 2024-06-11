@@ -3,6 +3,7 @@ import inflightPickup from "../images/inFlightPickup.png";
 import homeDelivery from "../images/homeDelivery.png";
 import airportInstorePickup from "../images/airportInstorePickup.png";
 import bodyPrebookMealVienVang from "../images/bodyPrebookMealVienVang.png";
+import exitModal from "../images/exitModal.png";
 import { NavLink } from "react-router-dom";
 import "./PhuongThucVanChuyenModal.css";
 
@@ -16,15 +17,21 @@ const PhuongThucVanChuyenModal = ({ isOpenModal, handleOnClickQuitModal }) => {
     setSelectedOption(value);
   };
   return (
-    <div className="fixed inset-0 bg-gray-400 text-white bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 font-KoHo bg-gray-400 text-white bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-prebookMeal p-10 rounded-[8px] relative w-[700px] h-[500px] flex flex-col items-center">
         <button
           onClick={() => handleOnClickQuitModal()}
-          className="absolute top-2 right-2 text-white text-xl cursor-pointer"
+          className="absolute top-2 right-2 flex items-center text-center justify-center"
+          style={{
+            backgroundImage: `url(${exitModal})`,
+            width: "32px",
+            height: "32px",
+            backgroundSize: "cover",
+          }}
         >
-          X
         </button>
-        <span className="text-[30px] font-bold">
+
+        <span className="text-[30px] font-KoHo font-bold">
           Chọn phương thức vận chuyển
         </span>
         <span className="text-[14px] mt-3">

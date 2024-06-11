@@ -7,17 +7,24 @@ import Card from "../Helpers/Card";
 import { globalContext } from "../../context";
 import Star from "../../images/1star.png";
 import MultiThumbSlider from "./MultiThumbSlider";
-import yellowCheckbox from "../../images/yellowCheckbox.png";
-import "./ProductList.css";
-const Product_list = () => {
-  const location = useLocation();
-  const categoryType = location.state.categoryType;
-  const categoryName = location.state.categoryName;
 
+import "./ProductList.css";
+const SearchResultPage = () => {
+  const location = useLocation();
+  let keyword = location.state.keyword;
   const { DataBase } = globalContext();
-  let categoryData = "";
-  categoryData = Object.values(DataBase).filter(
-    (data) => data.category === categoryType
+
+  let resultData = "";
+  resultData = Object.values(DataBase).filter(
+    (data) =>
+      data.origin
+        .toString()
+        .toLowerCase()
+        .includes(keyword.toString().toLowerCase()) ||
+      data.name
+        .toString()
+        .toLowerCase()
+        .includes(keyword.toString().toLowerCase())
   );
 
   const [brandList, setBrandList] = useState([
@@ -116,15 +123,6 @@ const Product_list = () => {
                             transform: "scale(1.7)",
                             WebkitTransform: "scale(1.7)" /* For Safari */,
                             MozTransform: "scale(1.7)" /* For Firefox */,
-                            appearance: checkedBrandList.includes(brand) ? "none" : "auto",
-                            width: "20px",
-                            height: "20px",
-                            position: "relative",
-                            backgroundImage: checkedBrandList.includes(brand) ? `url(${yellowCheckbox})` : "none",
-                            backgroundSize: "cover", // important
-  
-                            backgroundRepeat: "no-repeat",
-                            //backgroundPosition: "center",
                           }}
                           value={brand}
                           onChange={(event) => handleOnCheckBrand(event)}
@@ -179,7 +177,7 @@ const Product_list = () => {
         {/* The list of products*/}
         <div className="space-y-5">
           <div className="flex justify-between">
-            <span className="text-[30px] font-bold">{categoryName} </span>
+            <span className="text-[30px] font-bold">{keyword.toString()} </span>
             <div className="flex justify-center items-center space-x-3">
               <span> Sort by:</span>
               <div className="flex relative">
@@ -199,7 +197,7 @@ const Product_list = () => {
             </div>
           </div>
           <span className="text-[12px] text-gray-500">
-            {categoryData.length} items found for "{categoryName}"
+            {resultData.length} items found for "{keyword.toString()}"
           </span>
 
           <div className="flex">
@@ -210,7 +208,7 @@ const Product_list = () => {
           {/* Items range by 4x3*/}
           <div className="grid grid-cols-4 gap-y-5 gap-x-3 ">
             {currentSortingChoice === "LowestToHighest" &&
-              categoryData
+              resultData
                 .slice() // Create a shallow copy of the array to avoid mutating the original data
                 .sort((a, b) => a.salePrice - b.salePrice) // Sort by salePrice in increasing order
                 .map((data) => (
@@ -218,7 +216,7 @@ const Product_list = () => {
                 ))}
 
             {currentSortingChoice === "HighestToLowest" &&
-              categoryData
+              resultData
                 .slice() // Create a shallow copy of the array to avoid mutating the original data
                 .sort((a, b) => b.salePrice - a.salePrice) // Sort by salePrice in increasing order
                 .map((data) => (
@@ -231,4 +229,4 @@ const Product_list = () => {
   );
 };
 
-export default Product_list;
+export default SearchResultPage;
